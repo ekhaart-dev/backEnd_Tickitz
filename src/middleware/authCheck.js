@@ -1,7 +1,10 @@
+const { request } = require('express')
+
 const respone = require('../utils/respon')
 const jwt = require('jsonwebtoken')
 
 const authCheck = (...roles) => {
+
     return (req, res, next) => {
         const { authorization } = req.headers
         let isValid = false
@@ -11,6 +14,7 @@ const authCheck = (...roles) => {
         }
 
         const token = authorization.replace('Bearer ', '')
+        
         // jwt.verify(token, "SCRET_BNGT", (err, decode) => {
         jwt.verify(token, "SCRET_BNGT", (err, decode) => {
             if (err) {
@@ -25,7 +29,8 @@ const authCheck = (...roles) => {
             })
 
             if (isValid) {
-                req.user = decode.data
+                req.user = decode
+
                 return next()
             } else {
                 return respone(res, 401, 'anda tidak punya akases')
@@ -35,3 +40,4 @@ const authCheck = (...roles) => {
 }
 
 module.exports = authCheck
+

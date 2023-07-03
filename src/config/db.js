@@ -1,11 +1,13 @@
 const {Pool} = require('pg')
 const { host } = require('pg/lib/defaults')
+require('dotenv').config();
+
 
 const pool = new Pool({
-    user: 'ekha',
-    host: 'localhost',
-    database: 'db_tickitz_new',
-    password: 'eka12345'
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD
 })
 
 
